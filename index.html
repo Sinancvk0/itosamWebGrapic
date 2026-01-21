@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İhracatta Nitelikli Dönüşümün Anahtarı: Yüksek Teknoloji İhracatı</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        html, body {
+            overflow-y: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 50px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .content {
+            margin-bottom: 50px;
+        }
+
+        .content p {
+            font-size: 16px;
+            text-align: justify;
+            margin-bottom: 28px;
+            color: #444;
+            line-height: 1.9;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content h3 {
+            font-size: 1.7em;
+            color: #1a1a1a;
+            margin-top: 45px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .content h3.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content h4 {
+            font-size: 1.2em;
+            color: #1a1a1a;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .content h4.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f5f6f7 100%);
+            border-left: 4px solid #2c5282;
+            padding: 25px 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .highlight-box p {
+            margin-bottom: 0 !important;
+        }
+
+        .stat-highlight {
+            display: inline-block;
+            background-color: #e6f0ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #2c5282;
+        }
+
+        /* Chart Section Styles */
+        .chart-section {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .chart-section-wide {
+            margin: 60px -150px;
+            padding: 50px 60px;
+            background: #fff8f0;
+            border-top: 4px solid #c9a87c;
+            position: relative;
+        }
+
+        .chart-section-wide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 60px;
+            width: 80px;
+            height: 4px;
+            background: #1a1a1a;
+        }
+
+        @media (max-width: 1300px) {
+            .chart-section-wide {
+                margin: 60px -50px;
+                padding: 40px 40px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .chart-section-wide {
+                margin: 50px -20px;
+                padding: 30px 20px;
+            }
+
+            .chart-section-wide::before {
+                left: 20px;
+            }
+        }
+
+        .chart-wrapper {
+            flex: 1;
+            min-width: 0;
+            opacity: 0;
+            animation: fadeInScale 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .chart-wrapper.visible {
+            opacity: 1;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .chart-text {
+            flex: 1;
+            min-width: 300px;
+            opacity: 0;
+            animation: fadeInRight 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .chart-text.visible {
+            opacity: 1;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .ft-chart-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            letter-spacing: -0.02em;
+        }
+
+        .ft-chart-subtitle {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Bar Chart Styles */
+        .ft-bar-chart {
+            background: #fff;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .ft-bar-item {
+            display: flex;
+            align-items: center;
+            animation: slideInLeft 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .ft-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .ft-bar-label {
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
+            min-width: 180px;
+            text-align: left;
+        }
+
+        .ft-bar-background {
+            flex: 1;
+            height: 35px;
+            background-color: #f0f0f0;
+            border-radius: 0 4px 4px 0;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .ft-bar-fill {
+            height: 100%;
+            background: #2c5282;
+            transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            box-shadow: 2px 0 8px rgba(44, 82, 130, 0.3);
+        }
+
+        .ft-bar-fill.animate {
+            width: var(--bar-width);
+        }
+
+        .ft-bar-item:hover .ft-bar-fill {
+            filter: brightness(1.1);
+            transition: filter 0.3s ease;
+        }
+
+        .ft-bar-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .chart-source {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #d4c4b0;
+        }
+
+        .chart-source-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .chart-source-title strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .chart-source-notes {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6;
+            margin-top: 5px;
+        }
+
+        .source-list {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.7;
+            margin-top: 15px;
+            padding-left: 22px;
+        }
+
+        .source-list li {
+            margin-bottom: 10px;
+        }
+
+        /* Canvas Chart Container */
+        .canvas-chart-container {
+            margin: 50px 0;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .chart-canvas-container {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .chart-canvas-container.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        /* Policy Table Styles */
+        .table-container {
+            margin: 40px 0;
+            overflow-x: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .table-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .policy-table thead {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+        }
+
+        .policy-table th {
+            color: #fff;
+            font-weight: 600;
+            padding: 18px 20px;
+            text-align: left;
+            font-family: 'Georgia', serif;
+            font-size: 15px;
+            border-bottom: 3px solid #c9a87c;
+        }
+
+        .policy-table th:first-child {
+            background: #c9a87c;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        .policy-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e8e8e8;
+            color: #444;
+            line-height: 1.6;
+            vertical-align: top;
+        }
+
+        .policy-table .row-header {
+            background: #fff8f0;
+            font-weight: 600;
+            color: #1a1a1a;
+            border-right: 3px solid #c9a87c;
+        }
+
+        .policy-table tbody tr:hover {
+            background: #fafafa;
+        }
+
+        .policy-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-title {
+            font-family: 'Georgia', serif;
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            margin-top: 40px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .table-note {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .policy-table {
+                font-size: 13px;
+            }
+
+            .policy-table th,
+            .policy-table td {
+                padding: 12px 14px;
+            }
+        }
+
+        /* Indented Content */
+        .indented-content {
+            margin: 30px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f5f6f7 100%);
+            border-left: 4px solid #2c5282;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .indented-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2c5282, #4a7ab8, #2c5282);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .indented-content p {
+            font-size: 13px;
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 2px solid #a3bfdb;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .indented-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .indented-content p strong {
+            color: #2c5282;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .indented-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.9em;
+            }
+
+            .content p {
+                font-size: 15px;
+                margin-bottom: 20px;
+                line-height: 1.8;
+            }
+
+            .ft-chart-title {
+                font-size: 1.2em;
+            }
+
+            .chart-section {
+                flex-direction: column;
+            }
+
+            .chart-text {
+                min-width: 100%;
+            }
+
+            .ft-bar-chart {
+                gap: 15px;
+            }
+
+            .ft-bar-label {
+                font-size: 11px;
+                min-width: 100px;
+            }
+
+            .ft-bar-value {
+                font-size: 11px;
+                min-width: 80px;
+            }
+
+            .ft-bar-background {
+                height: 30px;
+            }
+
+            .indented-content {
+                padding: 25px 20px;
+                margin: 20px 0;
+            }
+
+            .indented-content p {
+                padding-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>İhracatta Nitelikli Dönüşümün Anahtarı: Yüksek Teknoloji İhracatı</h1>
+        </header>
+
+        <div class="content">
+            <p>
+                Bir ülkenin ekonomik başarısı çoğu zaman ihracat rakamları üzerinden değerlendirilir. Uzun yıllar boyunca daha fazla ihracat, daha fazla büyümenin en somut göstergesi olarak kabul edildi. Ancak bir ülkenin diğer ülkelerle rekabet edebilmesi için sadece ihracat miktarının fazlalığı yeterli değil. Asıl belirleyici olan unsur Dani Rodrik gibi iktisatçıların da vurguladığı gibi ihracatın niteliğinin ne olduğudur.
+            </p>
+
+            <p>
+                İhracat rakamları ne kadar yüksek olursa olsun, eğer bu ihracat düşük katma değerli ve teknoloji yoğunluğu sınırlı ürünlere dayanıyorsa, küresel rekabette kalıcı bir üstünlük sağlaması mümkün olmaz. Bu nedenle bir ülkenin ekonomik gücünü anlamak için toplam ihracat tutarına değil, ihracat kompozisyonuna bakmak gerekir. Zira ihraç edilen ürünlerin niteliği yalnızca o yılın dış ticaret performansını değil aynı zamanda ülkenin üretim kapasitesini, bilgi birikimini ve rekabet gücünü de yansıtır.
+            </p>
+
+            <p>
+                Bu çerçevede kalkınma tartışmasının odağının da değişmesi gerekir. İhracatı artırmaya yönelik politikalar, yalnızca miktar artışını hedeflediğinde elde edilen kazanımlar sınırlı kalır. Buna karşılık üretim yapısını daha karmaşık, bilgi ve teknoloji yoğun alanlara yönlendiren stratejiler ekonominin yapısal dönüşümünü mümkün kılar. Yüksek teknoloji ihracatı, bu dönüşümün hem en somut göstergesi hem de en güçlü kaldıraçlarından biri. Artık ihracatta nitelikli dönüşüm bir tercih değil bir zorunluluk haline geldi.
+            </p>
+        </div>
+
+        <div class="content">
+            <h3>Sürdürülebilir Büyüme için Daha Fazla İhracat Değil Daha Fazla Nitelikli İhracat</h3>
+
+            <p>
+                Ülkelerin büyüme başarı hikayesinde ana kahraman katma değerli üretim düzeyidir. Daha karmaşık, bilgi ve teknoloji yoğun ürünler üretebilen ülkeler küresel rekabette kalıcı bir avantaj elde eder. Öte yandan ağırlıklı olarak tarım ve hammadde ihracatıyla meşgul olan ekonomiler teknoloji üreten ve ihraç eden ülkelerle uzun vadeli bir mücadeleye giremez. Bu ülkeler ihracat yapar ancak değer üretmekte zorlanır. Sonuçta ise büyüme sınırlı kalır, refah artışı gecikir ve rekabet gücü kırılganlaşmaya başlar.
+            </p>
+
+            <p>
+                Yüksek teknoloji ihracatı diğer ihracat türlerinden farklı bir hikâyeye sahiptir. Bu ürünler tasarımda, mühendislikte, yazılımda ve bilgide değer oluşturur. Böyle bir üretim yapısı kurulduğunda elde edilen kazanç yalnızca ihracat gelirleriyle sınırlı kalmaz. Bilgi ekonominin geneline yayılır, verimlilik artar ve nitelikli istihdam güçlenir. Bu nedenle yüksek teknoloji ihracatı, sürdürülebilir kalkınmanın yalnızca bir sonucu değil aynı zamanda onu ileriye taşıyan en güçlü itici güçlerden biridir.
+            </p>
+
+            <p>
+                Büyüme başarısı elde etmiş ülkeler arasında oluşan fark tesadüf değil. Yüksek teknoloji üretim miktarındaki bu fark, bilinçli tercihler ve tutarlı politikalarla ortaya çıkar. Özellikle Ar-Ge destekleri ve uzun vadeli teşvik mekanizmaları bu dönüşümün temelini oluşturur. Güney Kore'nin bu konudaki başarı hikâyesi dikkat çekici. Bir dönem ihracatını büyük ölçüde tarımsal ürünlere dayandıran ülke, politikalarında zaman içinde köklü bir yön değişikliğine giderek sanayi ve teknoloji odaklı bir üretim yapısı oluşturdu. Bu stratejik dönüşümün sonucu, zaman içinde yüksek teknoloji ihracatı rakamlarına da net biçimde yansıdı. Ülkenin yüksek teknoloji ihracatı 2012 yılında 130,6 milyar dolar seviyesindeyken 2024'e gelindiğinde 216,2 milyar dolara ulaştı. Aynı dönemde toplam imalat sanayi içerisindeki payı ise %36,2 oldu. Bu tablo, katma değerli ihracatta politika tercihinin ne kadar önemli olduğunu gösterir nitelikte.
+            </p>
+        </div>
+
+        <!-- Güney Kore Çizgi Grafiği -->
+        <div class="chart-section-wide">
+            <div class="ft-chart-title">Güney Kore'nin Yüksek Teknoloji İhracatı, Dolar, 2012-2024</div>
+            <div class="ft-chart-subtitle">Milyar $</div>
+
+            <div class="chart-canvas-container" style="height: 520px; position: relative; margin: 35px 0;">
+                <canvas id="koreaLineChart"></canvas>
+            </div>
+
+            <div class="chart-source">
+                <div class="chart-source-title"><strong>Kaynak:</strong> Dünya Bankası     <strong>Görsel Tasarım:</strong>İTOSAM</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <h3>Yeni Strateji Arayışı: Misyon Odaklı Yaklaşım</h3>
+
+            <p>
+                Bir ülkenin yüksek teknoloji ihracatında yakaladığı başarı, çoğu zaman birkaç yıldız firmanın performansına indirgenerek anlatılır. Oysa birkaç firmanın küresel pazarlarda elde ettiği başarı, ülke ekonomisinin geneline yayılarak kalıcı ve dönüştürücü bir etki oluşturmada çoğu zaman yetersiz kalır. Yüksek teknoloji ihracatının sürdürülebilir büyümeye katkı sunabilmesi tekil şirket başarı hikayelerinden ziyade eğitim sisteminin niteliğine, Ar-Ge altyapısının gücüne finansmana erişim imkânlarına ve uygulanan politikalarla birlikte şekillenen bütüncül bir ekosistemin varlığına bağlıdır.
+            </p>
+
+            <p>
+                Yıllar boyunca hükûmetler eğitim yatırımları, mesleki beceri programları, altyapı projeleri ve vergi teşvikleri gibi yatay politikalarla bu ekosistemi güçlendirmeyi hedefledi. Bu adımlar önemli kazanımlar sağlamakla birlikte zamanla bunların tek başına yeterli olmadığı anlaşıldı. Bunun üzerine bazı ülkeler, bu kez yenilebilir enerji ya da savunma sanayi gibi stratejik sektörlere odaklanan dikey politikalara yönelim sağlasalar da giderek karmaşıklaşan küresel rekabet ortamında bu politikalar da sınırlı etki oluşturdu.
+            </p>
+
+            <p>
+                Yüksek teknoloji ihracatını artırarak sürdürülebilir büyüme hedeflerine ulaşmak isteyen ülkeler, günümüzün artan rekabet dinamiğine daha uygun olan, çok boyutlu ekonomik ve toplumsal sorunlara yanıt verebilen misyon odaklı politikaları tercih etmeye başladı. Misyon odaklı politikalar, yalnızca kamu ile özel sektör arasındaki iş birliğiyle sınırlı kalmayarak üniversiteler, sivil toplum kuruluşları ve girişimciler gibi farklı paydaşları da sürece dahil ederek ulaşılması gereken hedeflere daha bütüncül bir şekilde yaklaşılmasını sağlıyor. Bu politikalar, hedef odaklı ve seçici teşviklerle yüksek teknoloji ihracatını artıran sürdürülebilir bir büyüme modelinin inşa edilmesine yardımcı oluyor.
+            </p>
+
+            <!-- Politika Karşılaştırma Tablosu -->
+            <h3 class="table-title">Misyon Odaklı Politika Yaklaşımının Klasik Politikalardan Farkları</h3>
+            <div class="table-container">
+                <table class="policy-table">
+                    <thead>
+                        <tr>
+                            <th>Boyut</th>
+                            <th>Dikey Politikalar</th>
+                            <th>Yatay Politikalar</th>
+                            <th>Misyon Odaklı Politikalar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="row-header">Odak noktası</td>
+                            <td>Belirli bir sektör, endüstri veya teknoloji alanı</td>
+                            <td>Tüm sektörler</td>
+                            <td>Net dönüşüm hedefi</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Temel Amaç</td>
+                            <td>Sektörel çıktı ve rekabet gücü</td>
+                            <td>Genel verimlilik ve kapasite artışı</td>
+                            <td>Yapısal dönüşüm</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Politika Yaklaşımı</td>
+                            <td>Tekil hedefli destek</td>
+                            <td>Tarafsız ve yaygın destek</td>
+                            <td>Yönlendirici ve bütüncül</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Politika Araçları</td>
+                            <td>Sektörel teşvikler vb.</td>
+                            <td>Genel Ar-Ge teşvikleri, eğitim, altyapı vb.</td>
+                            <td>Misyon odaklı Ar-Ge, hedefe yönelik regülasyonlar, finansman araçlarının entegre kullanımı vb.</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Devletin Rolü</td>
+                            <td>Seçici destek sağlayıcı</td>
+                            <td>Düzenleyici</td>
+                            <td>Yönlendirici ve koordine edici</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Koordinasyon Düzeyi</td>
+                            <td>Sınırlı (çoğu zaman tekil kurum)</td>
+                            <td>Görece düşük, yatay yayılım</td>
+                            <td>Yüksek (kamu-özel-akademi-finans ekosistemi)</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Zaman Perspektifi</td>
+                            <td>Orta vadeli</td>
+                            <td>Orta vadeli</td>
+                            <td>Uzun vadeli ve dönüşüm odaklı</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Riskler/Sınırlılıklar</td>
+                            <td>Yanlış sektör seçimi</td>
+                            <td>Hedef belirsizliği, dağınık etki</td>
+                            <td>Yüksek koordinasyon ve yönetişim ihtiyacı</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Tipik Örnek</td>
+                            <td>Belirli bir sanayi koluna doğrudan destek</td>
+                            <td>Genel Ar-Ge vergi indirimi</td>
+                            <td>Net sıfır emisyon hedefi, yüksek teknoloji ihracatı misyonu</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="table-note">Not: Yazar tarafından derlenmiştir.</p>
+            </div>
+
+            <!-- Yüksek Teknoloji İhracatında Misyon Odaklı Politikaların Rolü -->
+            <h2 class="section-title">Yüksek Teknoloji İhracatında Misyon Odaklı Politikaların Rolü</h2>
+
+            <p>
+                Yüksek teknoloji ihracatını artırmak günümüzde ülkeler için yalnızca dış ticaret dengesini iyileştirmeye yönelik bir hedef değil, aynı zamanda üretim yapısını dönüştüren, verimlilik artışını hızlandıran ve sürdürülebilir büyümeyi mümkün kılan stratejik bir hamleye dönüşmüş durumda. Bu dönüşüm, misyon odaklı politikalar çerçevesinde yüksek teknoloji ihracatını engelleyen sorunlara yönelik açık hedefler etrafında koordine edilerek daha yüksek katma değerli ihracat yapısının önünü açıyor.
+            </p>
+
+            <p>
+                Misyon odaklı politikalarda devleti yalnızca düzenleyici ya da destekleyici bir aktör olarak değil, piyasa yönlendirici bir unsur olarak konumlandırıyor. Ar-Ge destekleri, vergi teşvikleri, krediler gibi finansman araçlarının entegre kullanımı belirlenen misyonlara hizmet edecek şekilde tasarlanıyor. Bu bütüncül yaklaşım, yüksek teknoloji ihracatını geçici artışlardan kurtararak kalıcı bir büyüme dinamiğine dönüştürüyor.
+            </p>
+
+            <p>
+                Küresel rekabetin sertleştiği, teknolojinin ekonomik güç dengelerini yeniden şekillendirdiği bir dönemdeyiz. Bu noktada yüksek teknolojili ürün ihracatı klasik bir dış ticaret göstergesi olmanın çok ötesine geçerek ülkelerin kalkınma tercihini, üretim yapısını ve geleceğe dair iddiasını yansıtıyor. Bugün yüksek gelirli ülkelerin ortak bir özelliği varsa bu da ihracat sepetlerinde bilgi yoğun, katma değeri yüksek ve teknolojiye dayalı ürünlerin ağırlıkta olması. Bu kapsamda, yazarları arasında yer aldığım İTOSAM tarafından yayımlanan Yüksek Teknoloji İhracatına Yönelik Misyon Odaklı Politikalar raporumuzda bu konuya dair önemli bir çerçeve sunuyoruz.
+            </p>
+
+            <p>
+                Yüksek teknoloji ihracatını şekillendiren başlıca faktörleri tanımlayarak bu göstergeler üzerinden ülkelerin son on yıldaki performansları karşılaştırmalı olarak analiz ederken ülkelerin yapısal değişimlerini daha görünür hale getirmeye çalıştık. Bu raporla amacımız, yüksek teknoloji ihracatının ülkelerin kalkınmasındaki merkezi rolünden hareketle bu alanda izlenebilecek politikalara dair kapsamlı bir yol haritası oluşturmak ve Türkiye'nin mevcut konumunu bütüncül bir bakış açısıyla değerlendirmektir.
+            </p>
+
+            <p>
+                Aynı zamanda yüksek teknoloji ihracatını artırmada etkili bir yaklaşım olarak misyon odaklı politikaların önemine dikkat çekerek seçilmiş gelişmiş ve gelişmekte olan ülkelerin benimsediği farklı politika tercihlerini, teşvik mekanizmalarını ve stratejik yönelimlerini ayrıntılı biçimde değerlendirdik. Ortaya çıkan tablo, teknoloji ihracatında başarının tek bir politika aracına değil, tutarlı ve misyon odaklı bir politika setine dayandığını gösteriyor.
+            </p>
+
+            <!-- Yüksek Teknoloji İhracatında Lider Ülkeler -->
+            <h2 class="section-title">Yüksek Teknoloji İhracatında Lider Ülkeler Neyi Farklı Yapıyor?</h2>
+
+            <p>
+                Yüksek teknoloji ihracat rakamlarını artırmak isteyen ülkeler stratejik alanlara daha fazla vergi indirimi uygulayarak o sektörde rekabet gücünü artırıyor. Bu alanda en dikkat çekici örneklerden biri Çin. Ülkenin yüksek teknoloji ihracatı 2024 yılında 856,7 milyar dolara ulaşırken aynı dönemde ABD'ye baktığımızda bu rakamın 232,9 milyar dolarda kaldığını görüyoruz.
+            </p>
+
+            <p>
+                Çin'deki politika değişiminde iki dalga olduğu görülüyor. İlk dalga, yerli inovasyonu vurgulayan Orta ve Uzun Vadeli Bilim ve Teknoloji Programıyla devam eden anlayış, ikinci dalga ise stratejik yükselen endüstrilere odaklanılarak politika geliştirilmesi. Ardından politika rasyonalizasyonuna ulaşma çabası, Çin hükûmetini uzmanlara danışmaya ve daha fazla karmaşıklık daha fazla öngörülebilirlik içeren daha kurumsallaşmış bir politika sürecine evirdi. Araştırmalara göre Çin'deki kurumsal yönetişimin inovasyon üzerinde olumlu etkisine dair kanıtlar mevcut.
+            </p>
+
+            <p>
+                Çin hükûmeti KOBİ'lerin karşılaştığı finansman zorlukları ve yüksek maliyetlerini düşüren çalışmalar yürüttü. Bu bağlamda Çin kredi kuruluşları dijital teknolojilerden yararlanarak KOBİ'lere verilen hizmeti kolaylaştırdı. Ülke, Nisan 2024'te teknolojik inovasyonu ve endüstriyel yükselmeleri teşvik etmek için 500 milyar Yuan değerinde bir kredi programı oluştururken 100 milyar Yuan'ı ise özellikle teknoloji firmalarının büyümesini desteklemeye ayırdı. Bununla birlikte Çin, sağladığı kredi kolaylıklarının yanı sıra kredi temini için gerekli olan bürokratik sürecin en aza indirilmesini sağlıyor.
+            </p>
+
+            <p>
+                Aynı zamanda Çin fikri mülkiyet korumasına da önem veren ülkelerden. Ülkenin patent başvuruları 1985 yılında 4 bin 065 iken 2023 yılına gelindiğinde büyük bir artışla 1 milyon 652 bin 437 adete ulaştı. 2023 yılında Amerika patent başvuruları ise 516 bin 427 adet olarak gerçekleşerek Çin'in gerisinde kaldı. Ayrıca Çin 2023 yılında 825 milyar dolar yüksek teknoloji ürünü ihraç ederek küresel yüksek teknoloji ihracatının %27'sini karşıladı.
+            </p>
+
+            <!-- Türkiye Bölümü -->
+            <h2 class="section-title">Peki Türkiye Bu Hikâyenin Neresinde?</h2>
+
+            <p>
+                Yüksek Teknoloji İhracatına Yönelik Misyon Odaklı Politikalar raporunda seçilmiş başlıca yüksek teknoloji ihracatı göstergelerinde Türkiye'nin diğer gelişmekte olan ülkelerle on yıllık performanslarını karşılaştırdık. Bu bağlamda, Türkiye'nin politika anlayışında teknoloji odaklılığa doğru bir yönelim bulunuyor. TÜBİTAK destek programları, teknoparklar, Ar-Ge merkezleri, üniversite-sanayi iş birliği projeleri aracılığıyla firmaları inovasyona yönlendiren çalışmalar yürütülüyor. Özellikle HIT-30 programı kapsamında belirlenen 30 kritik teknoloji alanına yönelik yatırımlar ve vergi teşvikleri, 2019 yılında başlatılan Teknoloji Odaklı Sanayi Hamlesi gibi yüksek katma değerli ürünlerin yurt içinde üretilmesine yönelik stratejiler geliştiriliyor.
+            </p>
+
+            <p>
+                Bununla birlikte yatırım taahhütlü avans kredisi gibi yenilikçi finansman araçları da yüksek teknoloji alanlarında özgün ürün geliştirme ve yerli üretim kapasitesinin güçlendirilmesi açısından dikkat çekici uygulamalar arasında. Yatırım projelerinin finansman ihtiyacına göre uzun vadeli ve düşük maliyetli krediler, vergi istisnaları, sermaye destekleri gibi uygulamalarla yüksek teknoloji ihracatının artırılmasına yönelik stratejiler uygulanıyor.
+            </p>
+
+            <p>
+                Türkiye'nin yüksek teknoloji ihracat rakamlarına bakıldığında ise geçmişten bugüne artan bir eğilime işaret ediyor. Ülkenin yüksek teknoloji ihracatı 2007 yılında 1,88 milyar dolar seviyesinde iken 2024 yılına gelindiğinde 9,9 milyar dolara ulaşıyor. Bu artış, yüksek teknoloji ihracatındaki ilerlemenin halen kırılgan olduğunu ancak yüksek bir potansiyele işaret ediyor. Bununla birlikte asıl dikkat çekici gelişme orta-yüksek teknoloji grubundaki ihracat artışında görülüyor. Türkiye 2014 yılında orta-yüksek teknoloji ihracatı 46,5 milyar dolar iken 2024 yılında bu rakam 83,7 milyar dolara artış gösteriyor.
+            </p>
+
+            <p>
+                Ancak yine de Türkiye'nin yüksek teknoloji ihracatında hedeflenen seviyeye ulaşamadığı görülüyor. Bu rakamsal yükseliş, henüz güçlü ve kalıcı bir dönüşüme tam anlamıyla karşılık gelmiyor. Dolayısıyla ülkede yüksek teknoloji ihracatı söylem düzeyinde stratejik bir hedef olarak benimsenmiş olsa da uygulamada hâlâ aşılması gereken önemli eşikler bulunuyor.
+            </p>
+        </div>
+
+        <!-- Türkiye Yüksek Teknoloji İhracatı Grafiği -->
+        <div class="chart-section-wide" id="turkeyChartSection">
+            <div class="ft-chart-title">Türkiye'nin Yüksek Teknoloji İhracatı, Dolar, 2007-2024</div>
+            <div class="ft-chart-subtitle">Milyar $</div>
+
+            <div class="chart-canvas-container" style="height: 480px; position: relative; margin: 35px 0;">
+                <canvas id="turkeyLineChart"></canvas>
+            </div>
+        </div>
+
+        <div class="content">
+            <p>
+                Bu çerçevede, Türkiye’nin kalkınma planlarında Ar-Ge ve yenilikçiliği merkeze alan bir yaklaşımı benimsemesi, yüksek teknoloji ihracatındaki kırılganlığın giderilmesi açısından önemli. Raporda yer verdiğimiz lider ülke analizlerinden elde edilen bulgular, yüksek teknoloji ihracatında kalıcı artışın ancak net hedeflerle tanımlanmış, uzun vadeli ve tutarlı politika setleriyle mümkün olduğunu ortaya koyuyor. Bu doğrultuda ‘’Yüksek Teknoloji İhracatına Yönelik Misyon Odaklı Politikalar’’ başlıklı raporumuzda, yüksek teknoloji ihracatının artırılmasına yönelik karar vericilere yol haritası oluşturacak nitelikte politika önerileri sunuyoruz.
+            </p>
+            <p>
+                Söz konusu önerilerin, hedef odaklı ve seçici politika yaklaşımıyla gerekli iş birlikleri içinde kararlılıkla uygulanması yüksek teknoloji ihracatının önündeki yapısal engellerin aşılmasına önemli katkı sağlayacaktır.
+            </p>
+        </div>
+
+        <div class="content">
+            <h3>Referanslar</h3>
+            <ul class="source-list">
+                <li>Dani Rodrik vd, “What You Export Matters”, <a href="https://www.hks.harvard.edu/centers/cid/publications/faculty-working-papers/what-you-export-matters">https://www.hks.harvard.edu/centers/cid/publications/faculty-working-papers/what-you-export-matters</a></li>
+                <li>OECD, The Design and Implementation Of Mission-Oriented Innovation Policies, 2021, <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/02/the-design-and-implementation-of-mission-oriented-innovation-policies_cb8908f7/3f6c76a4-en.pdf">https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/02/the-design-and-implementation-of-mission-oriented-innovation-policies_cb8908f7/3f6c76a4-en.pdf</a></li>
+                <li>Mariana Mazzucato, “Mission-Oriented Innovation Policies: Challenges and Opportunities,” Industrial and Corporate Change, 27(5), (2018):803-815, <a href="https://doi.org/10.1093/icc/dty034">https://doi.org/10.1093/icc/dty034</a>.</li>
+                <li>Dünya Bankası, “High Technology Exports (% of Manufactured Exports)”, Erişim: Haziran; World Bank, “High-technology exports” <a href="https://data.worldbank.org/indicator/TX.VAL.TECH.MF.ZS2025">https://data.worldbank.org/indicator/TX.VAL.TECH.MF.ZS2025</a>, <a href="https://data.worldbank.org/indicator/TX.VAL.TECH.MF.ZS?end=2024&start=2024&view=bar">https://data.worldbank.org/indicator/TX.VAL.TECH.MF.ZS?end=2024&start=2024&view=bar</a></li>
+                <li>Huanyong Ji ve Zhongzhen Miao, “Corporate Social Responsibility and Collaborative Innovation: The Role of Government Support,” Journal of Cleaner Production, 260, (2020), <a href="https://doi.org/10.1016/j.jclepro.2020.121028">https://doi.org/10.1016/j.jclepro.2020.121028</a>.</li>
+                <li>World Bank, “Patent Applications (Residents) – China,” <a href="https://data.worldbank.org/indicator/IP.PAT.RESD?locations=CN">https://data.worldbank.org/indicator/IP.PAT.RESD?locations=CN</a>.</li>
+                <li>WIPO, “Country Profile– List,” <a href="https://www.wipo.int/edocs/statistics-country-profile/en/_list/l1.pdf">https://www.wipo.int/edocs/statistics-country-profile/en/_list/l1.pdf</a>.</li>
+                <li>Robert D. Atkinson, “China is Rapidly Becoming a Leading Innovator in Advanced Industries,” Eylül 2024, <a href="https://cdn.sanity.io/files/03hnmfyj/production/b0048c362e28cb5fa10c0b9a99a6d314f4cf5dde.pdf">https://cdn.sanity.io/files/03hnmfyj/production/b0048c362e28cb5fa10c0b9a99a6d314f4cf5dde.pdf</a>.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ChartDataLabels plugin'i register et
+            Chart.register(ChartDataLabels);
+
+            // Bar grafiği animasyonu
+            const barObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bars = entry.target.querySelectorAll('.ft-bar-fill');
+                        bars.forEach((bar, index) => {
+                            setTimeout(() => {
+                                bar.classList.add('animate');
+                            }, index * 300);
+                        });
+                        barObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            // Güney Kore Çizgi Grafiği
+            const lineChartObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const ctx = document.getElementById('koreaLineChart');
+                        if (ctx) {
+                            new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                                    datasets: [{
+                                        label: 'Milyar $',
+                                        data: [130.68, 143.49, 149.06, 147.05, 135.91, 166.66, 192.79, 153.55, 163.07, 203.99, 209.65, 164.68, 216.20],
+                                        borderColor: '#0d7680',
+                                        backgroundColor: function(context) {
+                                            const chart = context.chart;
+                                            const {ctx, chartArea} = chart;
+                                            if (!chartArea) return 'rgba(13, 118, 128, 0.1)';
+                                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                                            gradient.addColorStop(0, 'rgba(13, 118, 128, 0.01)');
+                                            gradient.addColorStop(1, 'rgba(13, 118, 128, 0.12)');
+                                            return gradient;
+                                        },
+                                        borderWidth: 3.5,
+                                        fill: true,
+                                        tension: 0.2,
+                                        pointBackgroundColor: function(context) {
+                                            const index = context.dataIndex;
+                                            const highlightIndices = [0, 6, 12];
+                                            return highlightIndices.includes(index) ? '#0d7680' : '#0d7680';
+                                        },
+                                        pointBorderColor: '#fff',
+                                        pointBorderWidth: function(context) {
+                                            const index = context.dataIndex;
+                                            const highlightIndices = [0, 6, 12];
+                                            return highlightIndices.includes(index) ? 3 : 2;
+                                        },
+                                        pointRadius: function(context) {
+                                            const index = context.dataIndex;
+                                            const highlightIndices = [0, 6, 12];
+                                            return highlightIndices.includes(index) ? 10 : 5;
+                                        },
+                                        pointHoverRadius: 14,
+                                        pointHoverBackgroundColor: '#0d7680',
+                                        pointHoverBorderColor: '#fff',
+                                        pointHoverBorderWidth: 4
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    layout: {
+                                        padding: {
+                                            top: 50,
+                                            right: 30,
+                                            bottom: 20,
+                                            left: 15
+                                        }
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        tooltip: {
+                                            enabled: true,
+                                            backgroundColor: '#1a1a1a',
+                                            padding: 16,
+                                            cornerRadius: 0,
+                                            titleFont: {
+                                                size: 16,
+                                                weight: 'bold',
+                                                family: 'Georgia, serif'
+                                            },
+                                            bodyFont: {
+                                                size: 15,
+                                                family: 'Segoe UI, sans-serif'
+                                            },
+                                            displayColors: false,
+                                            borderColor: '#c9a87c',
+                                            borderWidth: 2,
+                                            callbacks: {
+                                                title: function(context) {
+                                                    return context[0].label + ' Yılı';
+                                                },
+                                                label: function(context) {
+                                                    return context.parsed.y.toFixed(2).replace('.', ',') + ' Milyar $';
+                                                }
+                                            }
+                                        },
+                                        datalabels: {
+                                            display: function(context) {
+                                                const index = context.dataIndex;
+                                                const highlightIndices = [0, 6, 12];
+                                                return highlightIndices.includes(index);
+                                            },
+                                            color: '#1a1a1a',
+                                            font: {
+                                                weight: 'bold',
+                                                size: 16,
+                                                family: 'Georgia, serif'
+                                            },
+                                            anchor: 'end',
+                                            align: 'top',
+                                            offset: 14,
+                                            formatter: function(value) {
+                                                return value.toFixed(2).replace('.', ',');
+                                            },
+                                            backgroundColor: '#fff8f0',
+                                            borderRadius: 0,
+                                            padding: {
+                                                top: 10,
+                                                bottom: 10,
+                                                left: 16,
+                                                right: 16
+                                            },
+                                            borderColor: '#c9a87c',
+                                            borderWidth: 2,
+                                            clip: false,
+                                            clamp: true,
+                                            opacity: function(context) {
+                                                return context.active ? 1 : 1;
+                                            },
+                                            listeners: {
+                                                enter: function(context) {
+                                                    context.hovered = true;
+                                                    return true;
+                                                },
+                                                leave: function(context) {
+                                                    context.hovered = false;
+                                                    return true;
+                                                }
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            grid: {
+                                                display: false
+                                            },
+                                            border: {
+                                                color: '#1a1a1a',
+                                                width: 2
+                                            },
+                                            ticks: {
+                                                font: {
+                                                    size: 15,
+                                                    family: 'Segoe UI, sans-serif',
+                                                    weight: function(context) {
+                                                        const label = context.tick.label;
+                                                        return ['2012', '2018', '2024'].includes(label) ? 'bold' : 'normal';
+                                                    }
+                                                },
+                                                color: function(context) {
+                                                    const label = context.tick.label;
+                                                    return ['2012', '2018', '2024'].includes(label) ? '#1a1a1a' : '#666';
+                                                },
+                                                padding: 10
+                                            }
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: 0,
+                                            max: 250,
+                                            position: 'left',
+                                            border: {
+                                                display: false
+                                            },
+                                            ticks: {
+                                                stepSize: 50,
+                                                font: {
+                                                    size: 14,
+                                                    family: 'Segoe UI, sans-serif'
+                                                },
+                                                color: '#666',
+                                                padding: 10,
+                                                callback: function(value) {
+                                                    return value;
+                                                }
+                                            },
+                                            grid: {
+                                                color: function(context) {
+                                                    return context.tick.value === 0 ? '#1a1a1a' : 'rgba(0, 0, 0, 0.08)';
+                                                },
+                                                lineWidth: function(context) {
+                                                    return context.tick.value === 0 ? 2 : 1;
+                                                },
+                                                drawBorder: false
+                                            }
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 3000,
+                                        easing: 'easeOutQuart',
+                                        delay: function(context) {
+                                            let delay = 0;
+                                            if (context.type === 'data' && context.mode === 'default') {
+                                                delay = context.dataIndex * 150 + context.datasetIndex * 100;
+                                            }
+                                            return delay;
+                                        },
+                                        x: {
+                                            type: 'number',
+                                            easing: 'easeOutQuart',
+                                            duration: 2000,
+                                            from: NaN,
+                                            delay: function(context) {
+                                                if (context.type !== 'data' || context.xStarted) return 0;
+                                                context.xStarted = true;
+                                                return context.index * 150;
+                                            }
+                                        },
+                                        y: {
+                                            type: 'number',
+                                            easing: 'easeOutBounce',
+                                            duration: 1500,
+                                            from: function(context) {
+                                                if (context.type === 'data') {
+                                                    return context.chart.scales.y.getPixelForValue(0);
+                                                }
+                                            },
+                                            delay: function(context) {
+                                                if (context.type !== 'data' || context.yStarted) return 0;
+                                                context.yStarted = true;
+                                                return context.index * 150;
+                                            }
+                                        },
+                                        radius: {
+                                            duration: 800,
+                                            easing: 'easeOutQuart',
+                                            from: 0,
+                                            to: function(context) {
+                                                const index = context.dataIndex;
+                                                const highlightIndices = [0, 6, 12];
+                                                return highlightIndices.includes(index) ? 10 : 5;
+                                            },
+                                            delay: function(context) {
+                                                return context.dataIndex * 150 + 500;
+                                            }
+                                        }
+                                    },
+                                    interaction: {
+                                        intersect: false,
+                                        mode: 'index'
+                                    },
+                                    onHover: function(event, elements) {
+                                        event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+                                    }
+                                }
+                            });
+                        }
+                        lineChartObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            const koreaLineChart = document.getElementById('koreaLineChart');
+            if (koreaLineChart) {
+                lineChartObserver.observe(koreaLineChart);
+            }
+
+            // Türkiye Çizgi Grafiği
+            try {
+                const turkeyCtx = document.getElementById('turkeyLineChart');
+                console.log('Turkey canvas:', turkeyCtx);
+                if (turkeyCtx) {
+                    const turkeyChart = new Chart(turkeyCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                            datasets: [{
+                                label: 'Yüksek Teknoloji İhracatı',
+                                data: [1.88, 1.96, 1.59, 1.94, 2.20, 2.33, 3.78, 4.29, 3.87, 3.42, 4.07, 3.74, 4.28, 4.17, 5.72, 6.91, 8.46, 9.90],
+                                borderColor: '#e63946',
+                                backgroundColor: 'rgba(230, 57, 70, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.3,
+                                pointBackgroundColor: '#e63946',
+                                pointBorderColor: '#e63946',
+                                pointBorderWidth: 2,
+                                pointRadius: 6,
+                                pointHoverRadius: 10
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                datalabels: {
+                                    display: function(context) {
+                                        const index = context.dataIndex;
+                                        return index === 0 || index === 7 || index === 17;
+                                    },
+                                    color: '#1a1a1a',
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14
+                                    },
+                                    anchor: 'end',
+                                    align: 'top',
+                                    offset: 8,
+                                    formatter: function(value) {
+                                        return value.toFixed(2).replace('.', ',');
+                                    },
+                                    backgroundColor: '#fff',
+                                    borderRadius: 4,
+                                    padding: 6
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    max: 12,
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.1)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    console.log('Turkey chart created:', turkeyChart);
+                }
+            } catch(e) {
+                console.error('Turkey chart error:', e);
+            }
+
+            // Chart container animasyonu
+            const chartContainerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        chartContainerObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const chartContainers = document.querySelectorAll('.chart-canvas-container');
+            chartContainers.forEach((container) => {
+                chartContainerObserver.observe(container);
+            });
+
+            // Scroll ile paragraf animasyonu
+            const paragraphObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Tüm paragrafları gözlemle
+            const paragraphs = document.querySelectorAll('.content p');
+            paragraphs.forEach(paragraph => {
+                paragraphObserver.observe(paragraph);
+            });
+
+            // H3 ve H4 başlıkları için de scroll animasyonu
+            const headings = document.querySelectorAll('.content h3, .content h4');
+            headings.forEach(heading => {
+                paragraphObserver.observe(heading);
+            });
+
+            // Girintili içerik paragrafları için
+            const indentedParagraphs = document.querySelectorAll('.indented-content p');
+            indentedParagraphs.forEach(paragraph => {
+                paragraphObserver.observe(paragraph);
+            });
+
+            // Tablo animasyonu için
+            const tables = document.querySelectorAll('.table-container');
+            tables.forEach(table => {
+                paragraphObserver.observe(table);
+            });
+
+            // Chart text animasyonu
+            const chartTexts = document.querySelectorAll('.chart-text');
+            chartTexts.forEach(text => {
+                paragraphObserver.observe(text);
+            });
+        });
+    </script>
+</body>
+</html>
