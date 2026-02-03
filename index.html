@@ -147,33 +147,27 @@
         }
 
         .chart-section-wide {
-            margin: 60px -150px;
-            padding: 50px 60px;
+            margin: 60px 0;
+            padding: 50px 30px;
             background: #fff8f0;
             border-top: 4px solid #c9a87c;
             position: relative;
+            border-radius: 8px;
         }
 
         .chart-section-wide::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 60px;
+            left: 30px;
             width: 80px;
             height: 4px;
             background: #1a1a1a;
         }
 
-        @media (max-width: 1300px) {
+        @media (max-width: 768px) {
             .chart-section-wide {
-                margin: 60px -50px;
-                padding: 40px 40px;
-            }
-        }
-
-        @media (max-width: 1100px) {
-            .chart-section-wide {
-                margin: 50px -20px;
+                margin: 40px 0;
                 padding: 30px 20px;
             }
 
@@ -597,8 +591,9 @@
 
         <div class="content">
             <p>
-                Bir ülkenin ekonomik başarısı çoğu zaman ihracat rakamları üzerinden değerlendirilir. Uzun yıllar boyunca daha fazla ihracat, daha fazla büyümenin en somut göstergesi olarak kabul edildi. Ancak bir ülkenin diğer ülkelerle rekabet edebilmesi için sadece ihracat miktarının fazlalığı yeterli değil. Asıl belirleyici olan unsur Dani Rodrik gibi iktisatçıların da vurguladığı gibi ihracatın niteliğinin ne olduğudur.
+                Bir ülkenin ekonomik başarısı çoğu zaman ihracat rakamları üzerinden değerlendirilir. Uzun yıllar boyunca daha fazla ihracat, daha fazla büyümenin en somut göstergesi olarak kabul edildi. Ancak bir ülkenin diğer ülkelerle rekabet edebilmesi için sadece ihracat miktarının fazlalığı yeterli değil. Asıl belirleyici olan unsur <a href="https://www.hks.harvard.edu/centers/cid/publications/faculty-working-papers/what-you-export-matters" target="_blank">Dani Rodrik</a> gibi iktisatçıların da vurguladığı gibi ihracatın niteliğinin ne olduğudur.
             </p>
+            
 
             <p>
                 İhracat rakamları ne kadar yüksek olursa olsun, eğer bu ihracat düşük katma değerli ve teknoloji yoğunluğu sınırlı ürünlere dayanıyorsa, küresel rekabette kalıcı bir üstünlük sağlaması mümkün olmaz. Bu nedenle bir ülkenin ekonomik gücünü anlamak için toplam ihracat tutarına değil, ihracat kompozisyonuna bakmak gerekir. Zira ihraç edilen ürünlerin niteliği yalnızca o yılın dış ticaret performansını değil aynı zamanda ülkenin üretim kapasitesini, bilgi birikimini ve rekabet gücünü de yansıtır.
@@ -627,7 +622,7 @@
 
         <!-- Güney Kore Çizgi Grafiği -->
         <div class="chart-section-wide">
-            <div class="ft-chart-title">Güney Kore'nin Yüksek Teknoloji İhracatı, Dolar, 2012-2024</div>
+            <div class="ft-chart-title"><img src="https://flagcdn.com/24x18/kr.png" alt="Güney Kore" style="vertical-align: middle; margin-right: 8px;"> Güney Kore'nin Yüksek Teknoloji İhracatı, Dolar, 2012-2024</div>
             <div class="ft-chart-subtitle">Milyar $</div>
 
             <div class="chart-canvas-container" style="height: 520px; position: relative; margin: 35px 0;">
@@ -790,7 +785,7 @@
 
         <!-- Türkiye Yüksek Teknoloji İhracatı Grafiği -->
         <div class="chart-section-wide" id="turkeyChartSection">
-            <div class="ft-chart-title">Türkiye'nin Yüksek Teknoloji İhracatı, Dolar, 2007-2024</div>
+            <div class="ft-chart-title"><img src="https://flagcdn.com/24x18/tr.png" alt="Türkiye" style="vertical-align: middle; margin-right: 8px;"> Türkiye'nin Yüksek Teknoloji İhracatı, Dolar, 2007-2024</div>
             <div class="ft-chart-subtitle">Milyar $</div>
 
             <div class="chart-canvas-container" style="height: 480px; position: relative; margin: 35px 0;">
@@ -808,7 +803,7 @@
         </div>
 
         <div class="content">
-            <h3>Referanslar</h3>
+            <h3>Kaynak</h3>
             <ul class="source-list">
                 <li>Dani Rodrik vd, “What You Export Matters”, <a href="https://www.hks.harvard.edu/centers/cid/publications/faculty-working-papers/what-you-export-matters">https://www.hks.harvard.edu/centers/cid/publications/faculty-working-papers/what-you-export-matters</a></li>
                 <li>OECD, The Design and Implementation Of Mission-Oriented Innovation Policies, 2021, <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/02/the-design-and-implementation-of-mission-oriented-innovation-policies_cb8908f7/3f6c76a4-en.pdf">https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/02/the-design-and-implementation-of-mission-oriented-innovation-policies_cb8908f7/3f6c76a4-en.pdf</a></li>
@@ -846,12 +841,9 @@
             });
 
             // Güney Kore Çizgi Grafiği
-            const lineChartObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const ctx = document.getElementById('koreaLineChart');
-                        if (ctx) {
-                            new Chart(ctx, {
+            const koreaCtx = document.getElementById('koreaLineChart');
+            if (koreaCtx) {
+                new Chart(koreaCtx, {
                                 type: 'line',
                                 data: {
                                     labels: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
@@ -1035,56 +1027,7 @@
                                             }
                                         }
                                     },
-                                    animation: {
-                                        duration: 3000,
-                                        easing: 'easeOutQuart',
-                                        delay: function(context) {
-                                            let delay = 0;
-                                            if (context.type === 'data' && context.mode === 'default') {
-                                                delay = context.dataIndex * 150 + context.datasetIndex * 100;
-                                            }
-                                            return delay;
-                                        },
-                                        x: {
-                                            type: 'number',
-                                            easing: 'easeOutQuart',
-                                            duration: 2000,
-                                            from: NaN,
-                                            delay: function(context) {
-                                                if (context.type !== 'data' || context.xStarted) return 0;
-                                                context.xStarted = true;
-                                                return context.index * 150;
-                                            }
-                                        },
-                                        y: {
-                                            type: 'number',
-                                            easing: 'easeOutBounce',
-                                            duration: 1500,
-                                            from: function(context) {
-                                                if (context.type === 'data') {
-                                                    return context.chart.scales.y.getPixelForValue(0);
-                                                }
-                                            },
-                                            delay: function(context) {
-                                                if (context.type !== 'data' || context.yStarted) return 0;
-                                                context.yStarted = true;
-                                                return context.index * 150;
-                                            }
-                                        },
-                                        radius: {
-                                            duration: 800,
-                                            easing: 'easeOutQuart',
-                                            from: 0,
-                                            to: function(context) {
-                                                const index = context.dataIndex;
-                                                const highlightIndices = [0, 6, 12];
-                                                return highlightIndices.includes(index) ? 10 : 5;
-                                            },
-                                            delay: function(context) {
-                                                return context.dataIndex * 150 + 500;
-                                            }
-                                        }
-                                    },
+                                    animation: false,
                                     interaction: {
                                         intersect: false,
                                         mode: 'index'
@@ -1093,18 +1036,7 @@
                                         event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
                                     }
                                 }
-                            });
-                        }
-                        lineChartObserver.unobserve(entry.target);
-                    }
                 });
-            }, {
-                threshold: 0.2
-            });
-
-            const koreaLineChart = document.getElementById('koreaLineChart');
-            if (koreaLineChart) {
-                lineChartObserver.observe(koreaLineChart);
             }
 
             // Türkiye Çizgi Grafiği
@@ -1146,17 +1078,27 @@
                                     color: '#1a1a1a',
                                     font: {
                                         weight: 'bold',
-                                        size: 14
+                                        size: 16,
+                                        family: 'Georgia, serif'
                                     },
                                     anchor: 'end',
                                     align: 'top',
-                                    offset: 8,
+                                    offset: 14,
                                     formatter: function(value) {
                                         return value.toFixed(2).replace('.', ',');
                                     },
-                                    backgroundColor: '#fff',
-                                    borderRadius: 4,
-                                    padding: 6
+                                    backgroundColor: '#fff8f0',
+                                    borderRadius: 0,
+                                    padding: {
+                                        top: 10,
+                                        bottom: 10,
+                                        left: 16,
+                                        right: 16
+                                    },
+                                    borderColor: '#c9a87c',
+                                    borderWidth: 2,
+                                    clip: false,
+                                    clamp: true
                                 }
                             },
                             scales: {
